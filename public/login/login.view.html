@@ -1,0 +1,119 @@
+﻿<div class="page-content-inner" style="background-image: url(./assets/img/login_bg.jpg)">
+
+    <!-- Login Omega Page -->
+    <div class="single-page-block-header">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="logo">
+                    <a href="javascript: history.back();">
+                        <img src="./assets/img/logo-inverse.png" alt="Meetz - Meeting App" />
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <div class="single-page-block-header-menu">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="single-page-block">
+        <div class="single-page-block-inner effect-3d-element">
+            <div class="blur-placeholder"><!-- --></div>
+            <div class="single-page-block-form">
+                <h3 class="text-center">
+                    <i class="icmn-enter margin-right-10"></i>
+                    WELCOME TO MEETZ!!
+                </h3>
+                <br />
+                <form ng-submit="vm.login()" name="loginForm" novalidate>
+                    <div class="form-group">
+                        <input type="email" class="form-control" placeholder="johndoe@email.com" name="usernameTextVal" ng-model="vm.email" ng-pattern="/^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/" required />
+                        <label class="text-danger" ng-show="loginForm.usernameTextVal.$touched && loginForm.usernameTextVal.$invalid">Please enter a valid email</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control password" placeholder="Password" name="passwordTextVal" ng-model="vm.password" ng-minlength="4"  ng-maxlength="12" required />
+                        <label class="text-danger" ng-show="loginForm.passwordTextVal.$touched && loginForm.passwordTextVal.$invalid">Please enter a valid password</label>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" ng-disabled="loginForm.$invalid" class="btn btn-primary width-150">Sign In</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="single-page-block-footer text-center">
+
+    </div>
+    <!-- End Login Omega Page -->
+
+</div>
+
+<!-- Page Scripts -->
+<script>
+    $(function() {
+
+        // Add class to body for change layout settings
+        $('body').addClass('single-page single-page-inverse');
+
+        // Form Validation
+        $('#form-validation').validate({
+            submit: {
+                settings: {
+                    inputContainer: '.form-group',
+                    errorListClass: 'form-control-error',
+                    errorClass: 'has-danger'
+                }
+            }
+        });
+
+        // Show/Hide Password
+        $('.password').password({
+            eyeClass: '',
+            eyeOpenClass: 'icmn-eye',
+            eyeCloseClass: 'icmn-eye-blocked'
+        });
+
+        // Set Background Image for Form Block
+        function setImage() {
+            var imgUrl = $('.page-content-inner').css('background-image');
+
+            $('.blur-placeholder').css('background-image', imgUrl);
+        };
+
+        function changeImgPositon() {
+            var width = $(window).width(),
+                    height = $(window).height(),
+                    left = - (width - $('.single-page-block-inner').outerWidth()) / 2,
+                    top = - (height - $('.single-page-block-inner').outerHeight()) / 2;
+
+
+            $('.blur-placeholder').css({
+                width: width,
+                height: height,
+                left: left,
+                top: top
+            });
+        };
+
+        setImage();
+        changeImgPositon();
+
+        $(window).on('resize', function(){
+            changeImgPositon();
+        });
+
+        // Mouse Move 3d Effect
+        var rotation = function(e){
+            var perX = (e.clientX/$(window).width())-0.5;
+            var perY = (e.clientY/$(window).height())-0.5;
+            TweenMax.to(".effect-3d-element", 0.4, { rotationY:15*perX, rotationX:15*perY,  ease:Linear.easeNone, transformPerspective:1000, transformOrigin:"center" })
+        };
+
+        if (!cleanUI.hasTouch) {
+            $('body').mousemove(rotation);
+        }
+
+    });
+</script>
+<!-- End Page Scripts -->

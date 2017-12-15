@@ -1,0 +1,9 @@
+
+INSERT INTO `propozal`.`role` (`name`) VALUES ('Admin');
+
+INSERT INTO `propozal`.`user` VALUES (3,'Admin','Admin','admin@email.com','1234567890','1000:i3JuApjL5Ep7x8ZWjDDUilMqCIlI1pLg:m5q7HNjQ0oB5POkvpVuIaK7UJFTM0hm6','70103993e0ad1fa0925cde41087f8dcc9d69a2cddd086524d23d5fa2e69e87b6','7d62216980c95cbba6d24c577c8c4fce03c2623f46071950f4bc8fecb750253fc0640df31d27fdf8afeb6947b47e6174fdb70c4c77c3b8c46f1f2c47075bec90','2016-12-08 07:14:11','2016-12-08 07:14:11','2016-12-08 07:14:11',1,1);
+
+
+
+
+

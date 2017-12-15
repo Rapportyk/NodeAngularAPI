@@ -1,0 +1,16 @@
+{
+  "role": [
+    {
+      "id": "1",
+      "role": "Admin"
+    },
+    {
+      "phone": "2",
+      "role": "Executive"
+    },
+    {
+      "phone": "3",
+      "role": "Attender"
+    }
+  ]
+}

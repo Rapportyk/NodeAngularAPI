@@ -1,0 +1,180 @@
+<div class="page-content-inner">
+    <!-- Dashboard -->
+    <div class="dashboard-container">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="panel panel-with-borders m-b-0">
+                    <div class="panel-body">
+                        <h5>Admin</h5>
+                        <div class="margin-bottom-50">
+                            <div class="nav-tabs-horizontal">
+                                <ul class="nav nav-tabs" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" href="javascript: void(0);" data-toggle="tab" data-target="#user" role="tab">
+                                            <i class="icmn-user"></i>
+                                            User
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="javascript: void(0);" data-toggle="tab" data-target="#role" role="tab">
+                                            <i class="icmn-user-lock"></i>
+                                            Role
+                                        </a>
+                                    </li>
+                                </ul>
+                                <script type="text/ng-template" id="roleModal.html">
+                                    <div class="modal-header">
+                                        <h3 class="modal-title" id="modal-title">{{title}}</h3>
+                                    </div>
+                                    <div class="modal-body" id="modal-body">
+                                        <form name="roleForm">
+                                            <div class="form-group row">
+                                                <div class="col-md-2 col-md-offset-2">
+                                                    <label class="form-control-label">Role Name</label>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input type="text" ng-model="roleName" class="form-control" placeholder="" minlength="4" required>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button ng-disabled="roleForm.$invalid" class="btn btn-primary" type="button" ng-click="save()">Save</button>
+                                        <button class="btn btn-default" type="button" ng-click="cancel()">Cancel</button>
+                                    </div>
+                                </script>
+                                <script type="text/ng-template" id="userModal.html">
+                                    <div class="modal-header">
+                                        <h3 class="modal-title" id="modal-title">{{title}}</h3>
+                                    </div>
+                                    <div class="modal-body" id="modal-body">
+                                        <form name="addUserForm">
+                                            <div class="form-group row">
+                                                <div class="col-md-2 col-md-offset-1">
+                                                    <label class="form-control-label">First Name</label>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input type="text" ng-model="firstName" class="form-control" placeholder="" required>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label class="form-control-label">Last Name</label>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input type="text" ng-model="lastName" class="form-control" placeholder="" required>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-md-2 col-md-offset-1">
+                                                    <label class="form-control-label">Phone</label>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input type="text" ng-model="phone" class="form-control" placeholder="" required>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label class="form-control-label">Email</label>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input type="text" ng-model="email" class="form-control" placeholder="" required>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-md-2 col-md-offset-1">
+                                                    <label class="form-control-label">Password</label>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input type="text" ng-model="password" disabled class="form-control" placeholder="">
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label class="form-control-label">Role</label>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input typeahead-show-hint="true" typeahead-min-length="0" type="text" ng-model="roleName" uib-typeahead="role.name for role in roleList | filter:$viewValue" class="form-control" required>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-md-2 col-md-offset-1">
+                                                    <label class="form-control-label">Active</label>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="btn-group radio-hidden">
+                                                        <label class="btn btn-default-outline" ng-class="{'active': isActive == true}">
+                                                            <input type="radio" name="active" ng-value="true" ng-model="isActive">
+                                                            Yes
+                                                        </label>
+                                                        <label class="btn btn-default-outline" ng-class="{'active': isActive == false}">
+                                                            <input type="radio" name="active" ng-value="false" ng-model="isActive">
+                                                            No
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button ng-disabled="addUserForm.$invalid || selectedOfficeList.length == 0 || selectedDepartmentList.length == 0" class="btn btn-primary" type="button" ng-click="save()">Save</button>
+                                        <button class="btn btn-default" type="button" ng-click="cancel()">Cancel</button>
+                                    </div>
+                                </script>
+                                <div class="tab-content padding-vertical-20">
+                                    <div class="tab-pane active" id="user" role="tabpanel">
+                                        <button type="button" class="btn btn-sm btn-secondary-outline margin-inline add-button" ng-click="vm.userAddClick()">Add User</button>
+                                        <table datatable="ng" dt-options="vm.dtOptions" class="table table-striped nowrap table-header-center" dt-column-defs="vm.userDTColumnDefs" width="100%">
+                                            <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Email</th>
+                                                <th>Phone</th>
+                                                <th>Role</th>
+                                                <th></th>
+                                                <th></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr ng-repeat="user in vm.userData">
+                                                <td>{{user.firstName}} {{user.lastName}}</td>
+                                                <td>{{user.email}}</td>
+                                                <td class="text-center p-r-30">{{user.phone}}</td>
+                                                <td>{{user.role}}</td>
+                                                <td class="text-center"><button type="button" class="btn btn-icon btn-link icmn-pencil5 margin-inline padding-0 margin-0" ng-click="vm.userEditClick($index)"></button></td>
+                                                <td class="text-center"><button type="button" class="btn btn-icon btn-link icmn-cancel-square margin-inline padding-0 margin-0" ng-click="vm.userDeleteClick($index)"></button></td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="tab-pane" id="role" role="tabpanel">
+                                        <div class="row">
+                                            <div class="col-sm-8">
+                                                <button type="button" class="btn btn-sm btn-secondary-outline margin-inline add-button" ng-click="vm.roleAddClick()">Add Role</button>
+                                                <table datatable="ng" dt-options="vm.dtOptions" class="table table-striped nowrap table-header-center" dt-column-defs="vm.roleDTColumnDefs" width="100%">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>S. No</th>
+                                                        <th>Name</th>
+                                                        <th></th>
+                                                        <th></th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr ng-repeat="role in vm.roleData">
+                                                        <td class="text-center p-r-30">{{$index+1}}</td>
+                                                        <td class="text-center p-r-30">{{role.name}}</td>
+                                                        <td class="text-center"><button type="button" class="btn btn-icon btn-link icmn-pencil5 margin-inline padding-0 margin-0" ng-click="vm.roleEditClick($index)"></button></td>
+                                                        <td class="text-center"><button type="button" class="btn btn-icon btn-link icmn-cancel-square margin-inline padding-0 margin-0" ng-click="vm.roleDeleteClick($index)"></button></td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        <div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- End Dashboard -->
+
+</div>
